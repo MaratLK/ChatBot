@@ -9,14 +9,14 @@ user_data = {}  # Словарь для хранения прогресса по
 # Функция для команды /start
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     keyboard = [
-        [InlineKeyboardButton("ТОП-10 фактов о Константине🔝", callback_data='option1')],
+        [InlineKeyboardButton("ТОП-10 фактов о талантливом Константине🔝", callback_data='option1')],
         [InlineKeyboardButton("Команда о Константине Валерьевиче📣", callback_data='option2')],
-        [InlineKeyboardButton("Пожелания нашему Константину🫶", callback_data='option3')],
+        [InlineKeyboardButton("Пожелания нашему Константину Валерьевичу👍", callback_data='option3')],
         [InlineKeyboardButton("Зарядиться энергией команды⚡️", callback_data='option4')],
         [InlineKeyboardButton("Тест 360°🤓", callback_data='test_start')]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
-    await update.message.reply_text("Праздничный привет!🥳 Выберите опцию:", reply_markup=reply_markup)
+    await update.message.reply_text("Привет! Выберите опцию:", reply_markup=reply_markup)
 
 # Обработка нажатий на кнопки
 async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -89,17 +89,15 @@ async def finish_test(query, context):
 
     total_questions = len(questions)
     score = user_info["score"]
-    percentage = round((score / total_questions) * 100)  # Округляем до целого числа
+    percentage = (score / total_questions) * 100
 
-    # Выводим только процент правильных ответов без десятичных знаков
     await query.message.reply_text(
-        f"Тест завершён!\nКостя, поздравляю!🎉 Ты завершил самооценку. Ждём результаты 360° от твоей команды❤️: {percentage}%."
+        f"Процент правильных ответов: {percentage:.2f}%."
     )
     del user_data[user_id]
 
     # Возвращаемся к стартовому меню
     await start(query, context)
-
 
 def main():
     app = ApplicationBuilder().token(TOKEN).build()
